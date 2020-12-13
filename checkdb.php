@@ -1,7 +1,7 @@
 <?php
  $dsn = 'mysql:dbname=bbs;host=localhost';
  $user = 'bbs';
- $password = 'bbshoge';
+ $password = $_SERVER['PHP_BBS'];
 
  print('MySQLへの接続テスト'.'<br />');
  try {

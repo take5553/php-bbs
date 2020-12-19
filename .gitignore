@@ -1,1 +1,3 @@
 bbs.code-workspace
+vendor
+phpunit.bat

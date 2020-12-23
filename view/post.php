@@ -24,6 +24,10 @@
                 <textarea name="post_body" id="post_body" cols="30" rows="10">本文を入力してください。</textarea>
             </p>
             <p>
+                パスワード：<br>
+                <input type="password" name="password" id="password">
+            </p>
+            <p>
                 <input type="hidden" name="eventId" value="save">
                 <input type="submit" value="送信">
             </p>

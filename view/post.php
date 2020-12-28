@@ -1,3 +1,6 @@
+<?php
+$post_data = $action->GetDBPostData();
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -21,7 +24,7 @@
             </p>
             <p>
                 本文：<br>
-                <textarea name="post_body" id="post_body" cols="30" rows="10">本文を入力してください。</textarea>
+                <textarea name="post_body" id="post_body" cols="30" rows="10"></textarea>
             </p>
             <p>
                 パスワード：<br>
@@ -37,28 +40,30 @@
 
     <!-- 記事表示エリア -->
     <div class="posts">
+        <?php if (!empty($post_data)) : ?>
         <div class="post">
-            <div class="auther">
-                <p>投稿者　表示場所</p>
-            </div>
-            <div class="post_timestamp">
-                <p>投稿日時　表示場所</p>
+            <?php foreach ($post_data as $post) :?>
+            <div class="name">
+                <p>名前：<a
+                        href="mailto:<?php echo $post['email']; ?>"><?php echo $post['name']; ?></a>
+                </p>
             </div>
             <div class="post_body">
-                <p>記事本文　表示場所</p>
+                <p><?php echo $post['body']; ?>
+                </p>
             </div>
+            <div class="posted_at">
+                <p><?php echo $post['posted_at']; ?>
+                </p>
+            </div>
+            <?php if ($post['posted_at'] != $post['updated_at']) : ?>
+            <p>
+                <?php echo $post['updated_at']; ?>
+            </p>
+            <?php endif;?>
+            <?php endforeach; ?>
         </div>
-        <div class="post">
-            <div class="auther">
-                <p>投稿者　表示場所</p>
-            </div>
-            <div class="post_timestamp">
-                <p>投稿日時　表示場所</p>
-            </div>
-            <div class="post_body">
-                <p>記事本文　表示場所</p>
-            </div>
-        </div>
+        <?php endif; ?>
     </div>
     <!-- 記事表示エリア終了 -->
 </body>

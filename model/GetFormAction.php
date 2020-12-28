@@ -31,4 +31,13 @@ class GetFormAction
         $smt->bindParam(':password', $data['password'], PDO::PARAM_STR);
         return $smt->execute();
     }
+
+    public function GetDBPostData()
+    {
+        $stm = $this->pdo->prepare('select * from posts order by posted_at DESC');
+        $stm->execute();
+        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
 }

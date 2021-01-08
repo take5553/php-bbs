@@ -2,3 +2,4 @@ bbs.code-workspace
 vendor
 phpunit.bat
 config/properties_for_test.php
+check_server_parameter.php

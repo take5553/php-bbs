@@ -24,7 +24,7 @@ $post_data = $action->GetDBPostData();
             </p>
             <p>
                 本文：<br>
-                <textarea name="post_body" id="post_body" cols="30" rows="10"></textarea>
+                <textarea name="body" id="body" cols="30" rows="10"></textarea>
             </p>
             <p>
                 パスワード：<br>

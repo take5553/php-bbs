@@ -58,7 +58,7 @@ class GetFormActionTest extends TestCase
             // $actual_fetchが配列なら記事が取得できているはず
             $this->assertEquals($data['name'], $actual_fetch['name']);
             $this->assertEquals($data['email'], $actual_fetch['email']);
-            $this->assertEquals($data['post_body'], $actual_fetch['body']);
+            $this->assertEquals($data['body'], $actual_fetch['body']);
             $this->assertEquals($data['password'], $actual_fetch['password']);
         }
         
@@ -75,37 +75,37 @@ class GetFormActionTest extends TestCase
             'Successful' => [[
                 'name' => 'testpost',
                 'email' => 'hoge@hoge.hoge',
-                'post_body' => 'これはテストです',
+                'body' => 'これはテストです',
                 'password' => 'password'
             ],true],
             'withoutName' => [[
                 'name' => '',
                 'email' => 'hoge@hoge.hoge',
-                'post_body' => 'これはテストです',
+                'body' => 'これはテストです',
                 'password' => 'password'
             ],false],
             'withoutEmail' => [[
                 'name' => 'testpost',
                 'email' => '',
-                'post_body' => 'これはテストです',
+                'body' => 'これはテストです',
                 'password' => 'password'
             ],false],
             'withoutBody' => [[
                 'name' => 'testpost',
                 'email' => 'hoge@hoge.hoge',
-                'post_body' => '',
+                'body' => '',
                 'password' => 'password'
             ],false],
             'withoutPassword' => [[
                 'name' => 'testpost',
                 'email' => 'hoge@hoge.hoge',
-                'post_body' => 'これはテストです',
+                'body' => 'これはテストです',
                 'password' => ''
             ],false],
             'withLongName' => [[
                 'name' => '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901',
                 'email' => 'hoge@hoge.hoge',
-                'post_body' => 'これはテストです',
+                'body' => 'これはテストです',
                 'password' => 'password'
             ],false]
         ];
@@ -124,7 +124,7 @@ class GetFormActionTest extends TestCase
         $smt = self::$pdo->prepare('insert into posts (name,email,body,password,posted_at,updated_at) values(:name,:email,:body,:password,now(),now())');
         $smt->bindParam(':name', $data['name'], PDO::PARAM_STR);
         $smt->bindParam(':email', $data['email'], PDO::PARAM_STR);
-        $smt->bindParam(':body', $data['post_body'], PDO::PARAM_STR);
+        $smt->bindParam(':body', $data['body'], PDO::PARAM_STR);
         $smt->bindParam(':password', $data['password'], PDO::PARAM_STR);
         $smt->execute();
 
@@ -135,7 +135,7 @@ class GetFormActionTest extends TestCase
         // 4. それぞれ確認
         $this->assertEquals($data['name'], $testPost['name']);
         $this->assertEquals($data['email'], $testPost['email']);
-        $this->assertEquals($data['post_body'], $testPost['body']);
+        $this->assertEquals($data['body'], $testPost['body']);
         $this->assertEquals($data['password'], $testPost['password']);
 
         // 5. 後片付け
@@ -149,7 +149,7 @@ class GetFormActionTest extends TestCase
             'successful' => [[
                 'name' => 'gettest',
                 'email' => 'get@get.get',
-                'post_body' => 'gettest',
+                'body' => 'gettest',
                 'password' => 'getget'
             ]]
         ];
@@ -225,7 +225,7 @@ class GetFormActionTest extends TestCase
         $data = array(
             'name' => 'OnePostData',
             'email' => 'test@test',
-            'post_body' => 'testtest',
+            'body' => 'testtest',
             'password' => 'hogehoge'
         );
 
@@ -233,12 +233,12 @@ class GetFormActionTest extends TestCase
         $smt = self::$pdo->prepare('insert into posts (name,email,body,password,posted_at,updated_at) values(:name,:email,:body,:password,now(),now())');
         $smt->bindParam(':name', $data['name'], PDO::PARAM_STR);
         $smt->bindParam(':email', $data['email'], PDO::PARAM_STR);
-        $smt->bindParam(':body', $data['post_body'], PDO::PARAM_STR);
+        $smt->bindParam(':body', $data['body'], PDO::PARAM_STR);
         $smt->bindParam(':password', $data['password'], PDO::PARAM_STR);
         $smt->execute();
 
         // 4. SQL文で直接記事を取得を試みる
-        $sql = "select * from posts where name = '$data[name]' and email = '$data[email]' and body = '$data[post_body]'";
+        $sql = "select * from posts where name = '$data[name]' and email = '$data[email]' and body = '$data[body]'";
         $stmt = self::$pdo->query($sql);
         $actual_fetch = $stmt->fetch();
 
@@ -251,13 +251,7 @@ class GetFormActionTest extends TestCase
         $this->assertEquals($actual_fetch['body'], $actual_result['body']);
         $this->assertEquals($actual_fetch['password'], $actual_result['password']);
 
-        // 7. 引数に空欄が渡されたら
-        $failure = $action->GetDBOnePostData('');
-
-        // 8. 失敗する
-        $this->assertFalse($failure);
-
-        // 9. testUpdateDBPostDataへ引き継ぎ
+        // 7. testUpdateDBPostDataへ引き継ぎ
         return $actual_fetch;
     }
 
@@ -271,10 +265,10 @@ class GetFormActionTest extends TestCase
 
         // 2. 変更後のデータを準備
         $data = array(
-            'id' => $originalPostData['id'],
+            'id' => (string)$originalPostData['id'],
             'name' => 'UpdatePostData',
             'email' => 'update@update',
-            'post_body' => 'updateupdate',
+            'body' => 'updateupdate',
             'password' => $originalPostData['password']
         );
 
@@ -290,10 +284,10 @@ class GetFormActionTest extends TestCase
         // 5. 評価
         $this->assertEquals($data['name'], $actual_fetch['name']);
         $this->assertEquals($data['email'], $actual_fetch['email']);
-        $this->assertEquals($data['post_body'], $actual_fetch['post_body']);
+        $this->assertEquals($data['body'], $actual_fetch['body']);
         $this->assertNotEquals($originalPostData['name'], $actual_fetch['name']);
         $this->assertNotEquals($originalPostData['email'], $actual_fetch['email']);
-        $this->assertNotEquals($originalPostData['post_body'], $actual_fetch['post_body']);
+        $this->assertNotEquals($originalPostData['body'], $actual_fetch['body']);
 
         // 6. パスワードが違うと失敗する
         $wrongData = $originalPostData;
@@ -307,13 +301,13 @@ class GetFormActionTest extends TestCase
         $actual_fetch = $stmt->fetch();
         $this->assertEquals($data['name'], $actual_fetch['name']);
         $this->assertEquals($data['email'], $actual_fetch['email']);
-        $this->assertEquals($data['post_body'], $actual_fetch['post_body']);
+        $this->assertEquals($data['body'], $actual_fetch['body']);
         $this->assertNotEquals($wrongData['name'], $actual_fetch['name']);
         $this->assertNotEquals($wrongData['email'], $actual_fetch['email']);
-        $this->assertNotEquals($wrongData['post_body'], $actual_fetch['post_body']);
+        $this->assertNotEquals($wrongData['body'], $actual_fetch['body']);
 
         // 8. 後片付け
-        $sql = "delete from posts where where id = $wrongData[id]";
+        $sql = "delete from posts where id = $wrongData[id]";
         $smt = self::$pdo->query($sql);
     }
 }

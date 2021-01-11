@@ -14,11 +14,22 @@ if (isset($_POST['eventId'])) {
 
 switch ($eventId) {
     case 'save':
-        $action->SaveDBPostData($_POST);
+        $saveResult = $action->SaveDBPostData($_POST);
         require('./view/post.php');
         break;
-    
-    default:
+    case 'update':
+        $updateResult = $action->UpdateDBPostData($_POST);
         require('./view/post.php');
+        break;
+    default:
+        $params = $action->GetParam();
+        switch ($params['mode']) {
+            case 'edit':
+                require('./view/edit.php');
+                break;
+            default:
+                require('./view/post.php');
+                break;
+        }
         break;
 }

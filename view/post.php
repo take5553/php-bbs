@@ -38,6 +38,18 @@ $post_data = $action->GetDBPostData();
     </div>
     <!-- 記事入力エリア終了 -->
 
+    <!-- エラーメッセージ表示エリア -->
+    <?php if (isset($saveResult) && $saveResult == false) :?>
+    <div class="errormsg">
+        <p>記事投稿に失敗しました。</p>
+    </div>
+    <?php elseif (isset($updateResult) && $updateResult == false) :?>
+    <div class="errormsg">
+        <p>記事編集に失敗しました。</p>
+    </div>
+    <?php endif; ?>
+    <!-- エラーメッセージ終了 -->
+
     <!-- 記事表示エリア -->
     <div class="posts">
         <?php if (!empty($post_data)) : ?>
@@ -46,6 +58,8 @@ $post_data = $action->GetDBPostData();
             <div class="name">
                 <p>名前：<a
                         href="mailto:<?php echo $post['email']; ?>"><?php echo $post['name']; ?></a>
+                    <a
+                        href="edit/<?php echo $post['id'] ?>">編集・削除</a>
                 </p>
             </div>
             <div class="post_body">
@@ -53,12 +67,12 @@ $post_data = $action->GetDBPostData();
                 </p>
             </div>
             <div class="posted_at">
-                <p><?php echo $post['posted_at']; ?>
+                <p>投稿日時：<?php echo $post['posted_at']; ?>
                 </p>
             </div>
             <?php if ($post['posted_at'] != $post['updated_at']) : ?>
             <p>
-                <?php echo $post['updated_at']; ?>
+                更新日時：<?php echo $post['updated_at']; ?>
             </p>
             <?php endif;?>
             <?php endforeach; ?>

@@ -21,12 +21,20 @@ switch ($eventId) {
         $updateResult = $action->UpdateDBPostData($_POST);
         require('./view/post.php');
         break;
+    case 'delete':
+        $deleteResult = $action->DeleteDBPostData((int)$_POST['id'], $_POST['password']);
+        require('./view/post.php');
+        break;
     default:
         $params = $action->GetParam();
         switch ($params['mode']) {
             case 'edit':
-                require('./view/edit.php');
-                break;
+                $edit_data = $action->GetDBOnePostData($params['id']);
+                if (is_array($edit_data)) {
+                    require('./view/edit.php');
+                    break;
+                }
+                // no break
             default:
                 require('./view/post.php');
                 break;

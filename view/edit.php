@@ -1,6 +1,3 @@
-<?php
-$post_data = $action->GetDBOnePostData($params['id']);
-?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -18,27 +15,27 @@ $post_data = $action->GetDBOnePostData($params['id']);
             <p>
                 名前：<br>
                 <input type="text" name="name" id="name"
-                    value="<?php echo $post_data['name'] ?>">
+                    value="<?php echo $edit_data['name'] ?>">
             </p>
             <p>
                 メールアドレス：<br>
                 <input type="email" name="email" id="email"
-                    value="<?php echo $post_data['email'] ?>">
+                    value="<?php echo $edit_data['email'] ?>">
             </p>
             <p>
                 本文：<br>
                 <textarea name="body" id="body" cols="30"
-                    rows="10"><?php echo $post_data['body'] ?></textarea>
+                    rows="10"><?php echo $edit_data['body'] ?></textarea>
             </p>
             <p>
                 パスワード：<br>
                 <input type="password" name="password" id="password">
             </p>
             <p>
-                <input type="hidden" name="eventId" value="update">
                 <input type="hidden" name="id"
-                    value="<?php echo $post_data['id'] ?>">
-                <input type="submit" value="送信">
+                    value="<?php echo $edit_data['id'] ?>">
+                <button name="eventId" value="update">更新</button><br><br>
+                <button name="eventId" value="delete">削除</button>
             </p>
         </form>
     </div>

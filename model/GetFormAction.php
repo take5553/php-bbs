@@ -107,6 +107,8 @@ class GetFormAction
 
     public function DeleteDBPostData(int $postId, string $password)
     {
+        // TODO: 引数のバリデーションが出来ていない
+
         // パスワードを確認
         // TODO: UpdateDBPostDataとコードが被っている
         $target_data = $this->GetDBOnePostData($postId);

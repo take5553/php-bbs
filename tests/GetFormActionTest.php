@@ -352,7 +352,11 @@ class GetFormActionTest extends TestCase
         }
         $this->assertFalse($postDatafound);
 
-        // 9. 後片付け
+        // 9. GetDBOnePostDataでも記事が取得できないことを確認
+        $getOneData_result = $action->GetDBOnePostData((int)$originalPostData['id']);
+        $this->assertFalse($getOneData_result);
+
+        // 10. 後片付け
         $sql = "delete from posts where id = $originalPostData[id]";
         $smt = self::$pdo->query($sql);
     }

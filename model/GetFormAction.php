@@ -38,7 +38,7 @@ class GetFormAction
 
     public function GetDBPostData()
     {
-        $stm = $this->pdo->prepare('select * from posts order by posted_at DESC');
+        $stm = $this->pdo->prepare('select * from posts where deleted_at is null order by posted_at DESC');
         $stm->execute();
         $result = $stm->fetchAll(PDO::FETCH_ASSOC);
 
@@ -70,7 +70,7 @@ class GetFormAction
 
     public function GetDBOnePostData(int $postId)
     {
-        $stm = $this->pdo->prepare('select * from posts where id = :id');
+        $stm = $this->pdo->prepare('select * from posts where id = :id and deleted_at is null');
         $stm->bindParam(':id', $postId, PDO::PARAM_INT);
         $stm->execute();
         $result = $stm->fetch(PDO::FETCH_ASSOC);
@@ -102,6 +102,20 @@ class GetFormAction
         $smt->bindParam(':body', $data['body'], PDO::PARAM_STR);
         $id = (int)$data['id'];
         $smt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $smt->execute();
+    }
+
+    public function DeleteDBPostData(int $postId, string $password)
+    {
+        // パスワードを確認
+        // TODO: UpdateDBPostDataとコードが被っている
+        $target_data = $this->GetDBOnePostData($postId);
+        if ($password != $target_data['password']) {
+            return false;
+        }
+
+        $smt = $this->pdo->prepare('update posts set deleted_at=now() where id=:id');
+        $smt->bindParam(':id', $postId, PDO::PARAM_INT);
         return $smt->execute();
     }
 }

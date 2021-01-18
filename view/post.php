@@ -47,10 +47,6 @@ $post_data = $action->GetDBPostData();
     <div class="errormsg">
         <p>記事編集に失敗しました。</p>
     </div>
-    <?php elseif (isset($edit_data) && $edit_data == false) : ?>
-    <div class="errormsg">
-        <p>無効なパラメーターが指定されました。</p>
-    </div>
     <?php endif; ?>
     <!-- エラーメッセージ終了 -->
 

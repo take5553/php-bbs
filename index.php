@@ -32,9 +32,10 @@ switch ($eventId) {
                 $edit_data = $action->GetDBOnePostData($params['id']);
                 if (is_array($edit_data)) {
                     require('./view/edit.php');
-                    break;
+                } else {
+                    require('./view/id_error.php');
                 }
-                // no break
+                break;
             default:
                 require('./view/post.php');
                 break;

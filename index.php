@@ -22,7 +22,7 @@ switch ($eventId) {
         require('./view/post.php');
         break;
     case 'delete':
-        $deleteResult = $action->DeleteDBPostData((int)$_POST['id'], $_POST['password']);
+        $deleteResult = $action->DeleteDBPostData($_POST);
         require('./view/post.php');
         break;
     default:

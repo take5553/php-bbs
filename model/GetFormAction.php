@@ -18,11 +18,7 @@ class GetFormAction
     public function SaveDBPostData($data)
     {
         // 渡されたデータが正当なものかどうか
-        // TODO: ===を使って型までチェック
-        if (($data['name'] == '') or ($data['email'] == '') or ($data['body'] == '') or ($data['password'] == '')) {
-            return false;
-        }
-        if (((mb_strlen($data['name'])) > 100) or ((mb_strlen($data['email']) > 256)) or (mb_strlen($data['body']) > 5000) or (mb_strlen($data['password']) > 50) or (mb_strlen($data['password']) < 4)) {
+        if ($this->IsDataIncorrect($data)) {
             return false;
         }
 
@@ -34,6 +30,38 @@ class GetFormAction
         $smt->bindParam(':body', $data['body'], PDO::PARAM_STR);
         $smt->bindParam(':password', $data['password'], PDO::PARAM_STR);
         return $smt->execute();
+    }
+
+    private function IsDataIncorrect($data)
+    {
+        // idのチェック
+        if (isset($data['id'])) {
+            if ($data['id'] === '' or (! ctype_digit($data['id']))) {
+                return true;
+            }
+        }
+
+        // nameのチェック
+        if ($data['name'] === '' or ((mb_strlen($data['name'])) > 100)) {
+            return true;
+        }
+
+        // emailのチェック
+        if ($data['email'] === '' or ((mb_strlen($data['email']) > 256))) {
+            return true;
+        }
+
+        // bodyのチェック
+        if ($data['body'] === '' or (mb_strlen($data['body']) > 5000)) {
+            return true;
+        }
+
+        // passwordのチェック
+        if ($data['password'] === '' or (mb_strlen($data['password']) > 50) or (mb_strlen($data['password']) < 4)) {
+            return true;
+        }
+
+        return false;
     }
 
     public function GetDBPostData()
@@ -81,11 +109,7 @@ class GetFormAction
     public function UpdateDBPostData(array $data)
     {
         // 渡されたデータが正当なものかどうか
-        // TODO: SaveDBPostDataとコードがほとんど被ってる
-        if (($data['id'] == '') or ($data['name'] == '') or ($data['email'] == '') or ($data['body'] == '') or ($data['password'] == '')) {
-            return false;
-        }
-        if ((! ctype_digit($data['id'])) or ((mb_strlen($data['name'])) > 100) or ((mb_strlen($data['email']) > 256)) or (mb_strlen($data['body']) > 5000) or (mb_strlen($data['password']) > 50) or (mb_strlen($data['password']) < 4)) {
+        if ($this->IsDataIncorrect($data)) {
             return false;
         }
 
@@ -105,18 +129,22 @@ class GetFormAction
         return $smt->execute();
     }
 
-    public function DeleteDBPostData(int $postId, string $password)
+    public function DeleteDBPostData($data)
     {
-        // TODO: 引数のバリデーションが出来ていない
+        // 渡されたデータが正当なものかどうか
+        if ($this->IsDataIncorrect($data)) {
+            return false;
+        }
 
         // パスワードを確認
         // TODO: UpdateDBPostDataとコードが被っている
-        $target_data = $this->GetDBOnePostData($postId);
-        if ($password != $target_data['password']) {
+        $target_data = $this->GetDBOnePostData((int)$data['id']);
+        if ($data['password'] != $target_data['password']) {
             return false;
         }
 
         $smt = $this->pdo->prepare('update posts set deleted_at=now() where id=:id');
+        $postId = (int)$data['id'];
         $smt->bindParam(':id', $postId, PDO::PARAM_INT);
         return $smt->execute();
     }

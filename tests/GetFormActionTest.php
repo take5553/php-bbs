@@ -319,7 +319,9 @@ class GetFormActionTest extends TestCase
         $action = new GetFormAction();
 
         // 2. パスワードが違うと削除できない
-        $result = $action->DeleteDBPostData((int)$originalPostData['id'], "hugahuga");
+        $wrongData = $originalPostData;
+        $wrongData['password'] = "hugahuga";
+        $result = $action->DeleteDBPostData($wrongData);
         $this->assertFalse($result);
 
         // 3. SQL文で直接記事を取得を試みる
@@ -331,7 +333,7 @@ class GetFormActionTest extends TestCase
         $this->assertNull($actual_fetch['deleted_at']);
 
         // 5. パスワードが正しいと削除できる
-        $result = $action->DeleteDBPostData((int)$originalPostData['id'], $originalPostData['password']);
+        $result = $action->DeleteDBPostData($originalPostData);
         $this->assertTrue($result);
 
         // 6. SQL文で直接記事を取得を試みる

@@ -56,10 +56,10 @@ class GetFormActionTest extends TestCase
         $this->assertEquals($expected, is_array($actual_fetch));
         if (is_array($actual_fetch) == true) {
             // $actual_fetchが配列なら記事が取得できているはず
-            $this->assertEquals($data['name'], $actual_fetch['name']);
-            $this->assertEquals($data['email'], $actual_fetch['email']);
-            $this->assertEquals($data['body'], $actual_fetch['body']);
-            $this->assertEquals($data['password'], $actual_fetch['password']);
+            $this->assertEquals(htmlentities($data['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['name']);
+            $this->assertEquals(htmlentities($data['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['email']);
+            $this->assertEquals(htmlentities($data['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['body']);
+            $this->assertEquals(htmlentities($data['password'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['password']);
         }
         
         // 6. 後片付け
@@ -282,12 +282,12 @@ class GetFormActionTest extends TestCase
         $actual_fetch = $stmt->fetch();
 
         // 5. 評価
-        $this->assertEquals($data['name'], $actual_fetch['name']);
-        $this->assertEquals($data['email'], $actual_fetch['email']);
-        $this->assertEquals($data['body'], $actual_fetch['body']);
-        $this->assertNotEquals($originalPostData['name'], $actual_fetch['name']);
-        $this->assertNotEquals($originalPostData['email'], $actual_fetch['email']);
-        $this->assertNotEquals($originalPostData['body'], $actual_fetch['body']);
+        $this->assertEquals(htmlentities($data['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['name']);
+        $this->assertEquals(htmlentities($data['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['email']);
+        $this->assertEquals(htmlentities($data['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['body']);
+        $this->assertNotEquals(htmlentities($originalPostData['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['name']);
+        $this->assertNotEquals(htmlentities($originalPostData['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['email']);
+        $this->assertNotEquals(htmlentities($originalPostData['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['body']);
 
         // 6. パスワードが違うと失敗する
         $wrongData = $originalPostData;
@@ -299,12 +299,12 @@ class GetFormActionTest extends TestCase
         $sql = "select * from posts where id = $wrongData[id]";
         $stmt = self::$pdo->query($sql);
         $actual_fetch = $stmt->fetch();
-        $this->assertEquals($data['name'], $actual_fetch['name']);
-        $this->assertEquals($data['email'], $actual_fetch['email']);
-        $this->assertEquals($data['body'], $actual_fetch['body']);
-        $this->assertNotEquals($wrongData['name'], $actual_fetch['name']);
-        $this->assertNotEquals($wrongData['email'], $actual_fetch['email']);
-        $this->assertNotEquals($wrongData['body'], $actual_fetch['body']);
+        $this->assertEquals(htmlentities($data['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['name']);
+        $this->assertEquals(htmlentities($data['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['email']);
+        $this->assertEquals(htmlentities($data['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['body']);
+        $this->assertNotEquals(htmlentities($wrongData['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['name']);
+        $this->assertNotEquals(htmlentities($wrongData['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['email']);
+        $this->assertNotEquals(htmlentities($wrongData['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8"), $actual_fetch['body']);
 
         // 8. testDeleteDBPostDataへ引き継ぐ
         return $data;

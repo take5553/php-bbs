@@ -22,13 +22,17 @@ class GetFormAction
             return false;
         }
 
+        // 投稿データのエスケープ
+        foreach ($data as $key => $value) {
+            $escapedData[$key] = htmlentities($value, ENT_HTML5 | ENT_QUOTES, "UTF-8");
+        }
+
         // 投稿された記事をDBに保存
-        // TODO: HTML文字のエスケープが必要
         $smt = $this->pdo->prepare('insert into posts (name,email,body,password,posted_at,updated_at) values(:name,:email,:body,:password,now(),now())');
-        $smt->bindParam(':name', $data['name'], PDO::PARAM_STR);
-        $smt->bindParam(':email', $data['email'], PDO::PARAM_STR);
-        $smt->bindParam(':body', $data['body'], PDO::PARAM_STR);
-        $smt->bindParam(':password', $data['password'], PDO::PARAM_STR);
+        $smt->bindParam(':name', $escapedData['name'], PDO::PARAM_STR);
+        $smt->bindParam(':email', $escapedData['email'], PDO::PARAM_STR);
+        $smt->bindParam(':body', $escapedData['body'], PDO::PARAM_STR);
+        $smt->bindParam(':password', $escapedData['password'], PDO::PARAM_STR);
         return $smt->execute();
     }
 
@@ -113,18 +117,23 @@ class GetFormAction
             return false;
         }
 
+        // 投稿データのエスケープ
+        foreach ($data as $key => $value) {
+            $escapedData[$key] = htmlentities($value, ENT_HTML5 | ENT_QUOTES, "UTF-8");
+        }
+
         // パスワードを確認
         $old_data = $this->GetDBOnePostData((int)$data['id']);
-        if ($data['password'] != $old_data['password']) {
+        if ($escapedData['password'] != $old_data['password']) {
             return false;
         }
 
         // 編集された記事をDBに保存
         $smt = $this->pdo->prepare('update posts set name=:name, email=:email, body=:body where id=:id');
-        $smt->bindParam(':name', $data['name'], PDO::PARAM_STR);
-        $smt->bindParam(':email', $data['email'], PDO::PARAM_STR);
-        $smt->bindParam(':body', $data['body'], PDO::PARAM_STR);
-        $id = (int)$data['id'];
+        $smt->bindParam(':name', $escapedData['name'], PDO::PARAM_STR);
+        $smt->bindParam(':email', $escapedData['email'], PDO::PARAM_STR);
+        $smt->bindParam(':body', $escapedData['body'], PDO::PARAM_STR);
+        $id = (int)$escapedData['id'];
         $smt->bindParam(':id', $id, PDO::PARAM_INT);
         return $smt->execute();
     }

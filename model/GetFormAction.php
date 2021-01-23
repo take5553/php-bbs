@@ -27,6 +27,12 @@ class GetFormAction
             $escapedData[$key] = htmlentities($value, ENT_HTML5 | ENT_QUOTES, "UTF-8");
         }
 
+        // パスワードのハッシュ化
+        $escapedData['password'] = password_hash($escapedData['password'], PASSWORD_DEFAULT);
+        if ($escapedData['password'] === false) {
+            return false;
+        }
+
         // 投稿された記事をDBに保存
         $smt = $this->pdo->prepare('insert into posts (name,email,body,password,posted_at,updated_at) values(:name,:email,:body,:password,now(),now())');
         $smt->bindParam(':name', $escapedData['name'], PDO::PARAM_STR);
@@ -124,7 +130,7 @@ class GetFormAction
 
         // パスワードを確認
         $old_data = $this->GetDBOnePostData((int)$data['id']);
-        if ($escapedData['password'] != $old_data['password']) {
+        if (! password_verify($escapedData['password'], $old_data['password'])) {
             return false;
         }
 
@@ -145,10 +151,14 @@ class GetFormAction
             return false;
         }
 
+        // 投稿データのエスケープ
+        foreach ($data as $key => $value) {
+            $escapedData[$key] = htmlentities($value, ENT_HTML5 | ENT_QUOTES, "UTF-8");
+        }
+
         // パスワードを確認
-        // TODO: UpdateDBPostDataとコードが被っている
-        $target_data = $this->GetDBOnePostData((int)$data['id']);
-        if ($data['password'] != $target_data['password']) {
+        $old_data = $this->GetDBOnePostData((int)$data['id']);
+        if (! password_verify($escapedData['password'], $old_data['password'])) {
             return false;
         }
 

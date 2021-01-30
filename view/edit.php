@@ -9,6 +9,14 @@
 <body>
     <h1>たけしのページの掲示板</h1>
     <h2>記事編集</h2>
+    <!-- エラーメッセージ表示エリア -->
+    <?php if (isset($errmsg)) :?>
+    <div class="errormsg">
+        <p><?php echo htmlentities($errmsg, ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>
+        </p>
+    </div>
+    <?php endif; ?>
+    <!-- エラーメッセージ終了 -->
     <!-- 記事入力エリア -->
     <div class="input_area">
         <form action="../index.php" method="post" id="post_form">
@@ -34,6 +42,8 @@
             <p>
                 <input type="hidden" name="id"
                     value="<?php echo htmlentities($edit_data['id'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
+                <input type="hidden" name="token"
+                    value="<?php echo htmlentities(password_hash(session_id(), PASSWORD_DEFAULT), ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
                 <button name="eventId" value="update">更新</button><br><br>
                 <button name="eventId" value="delete">削除</button>
             </p>

@@ -27,7 +27,7 @@ class GetFormAction
         if ($data['password'] === false) {
             return false;
         }
-
+        // TODO: 改行文字の処理
         // 投稿された記事をDBに保存
         $smt = $this->pdo->prepare('insert into posts (name,email,body,password,posted_at,updated_at) values(:name,:email,:body,:password,now(),now())');
         $smt->bindParam(':name', $data['name'], PDO::PARAM_STR);
@@ -142,6 +142,7 @@ class GetFormAction
         }
 
         // パスワードを確認
+        // TODO: $old_data=falseのときの対処
         $old_data = $this->GetDBOnePostData((int)$data['id']);
         if (! password_verify($data['password'], $old_data['password'])) {
             return false;

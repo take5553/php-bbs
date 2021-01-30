@@ -16,15 +16,21 @@ $post_data = $action->GetDBPostData();
         <form action="./index.php" method="post" id="post_form">
             <p>
                 名前：<br>
-                <input type="text" name="name" id="name">
+                <input type="text" name="name" id="name" value="<?php if ($repost_flag) {
+    echo htmlentities($filtered_post_data['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8");
+}?>">
             </p>
             <p>
                 メールアドレス：<br>
-                <input type="email" name="email" id="email">
+                <input type="email" name="email" id="email" value="<?php if ($repost_flag) {
+    echo htmlentities($filtered_post_data['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8");
+}?>">
             </p>
             <p>
                 本文：<br>
-                <textarea name="body" id="body" cols="30" rows="10"></textarea>
+                <textarea name="body" id="body" cols="30" rows="10"><?php if ($repost_flag) {
+    echo htmlentities($filtered_post_data['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8");
+}?></textarea>
             </p>
             <p>
                 パスワード：<br>
@@ -32,6 +38,8 @@ $post_data = $action->GetDBPostData();
             </p>
             <p>
                 <input type="hidden" name="eventId" value="save">
+                <input type="hidden" name="token"
+                    value="<?php echo htmlentities(password_hash(session_id(), PASSWORD_DEFAULT), ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
                 <input type="submit" value="送信">
             </p>
         </form>
@@ -46,6 +54,11 @@ $post_data = $action->GetDBPostData();
     <?php elseif (isset($updateResult) && $updateResult == false) :?>
     <div class="errormsg">
         <p>記事編集に失敗しました。</p>
+    </div>
+    <?php elseif (isset($errmsg)) :?>
+    <div class="errormsg">
+        <p><?php echo htmlentities($errmsg, ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>
+        </p>
     </div>
     <?php endif; ?>
     <!-- エラーメッセージ終了 -->

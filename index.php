@@ -5,6 +5,9 @@ session_start();
 require_once('./config/properties.php');
 require_once('./model/GetFormAction.php');
 
+// クリッキングジャック対策
+header('X-Frame-Options: DENY');
+
 $action = new GetFormAction();
 $eventId = null;
 $repost_flag = false;

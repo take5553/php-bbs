@@ -48,18 +48,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eventId'])) {
     }
 }
 
-// TODO: 処理に失敗したときのメッセージを格納する変数が必要
 switch ($eventId) {
     case 'save':
         $saveResult = $action->SaveDBPostData($_POST);
+        if ($saveResult == false) {
+            $errmsg = "記事投稿に失敗しました。";
+        }
         require('./view/post.php');
         break;
     case 'update':
         $updateResult = $action->UpdateDBPostData($_POST);
+        if ($updateResult == false) {
+            $errmsg = "記事編集に失敗しました。";
+        }
         require('./view/post.php');
         break;
     case 'delete':
         $deleteResult = $action->DeleteDBPostData($_POST);
+        if ($deleteResult == false) {
+            $errmsg = "記事削除に失敗しました。";
+        }
         require('./view/post.php');
         break;
     default:

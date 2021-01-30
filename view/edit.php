@@ -33,7 +33,7 @@
             <p>
                 本文：<br>
                 <textarea name="body" id="body" cols="30"
-                    rows="10"><?php echo htmlentities($edit_data['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?></textarea>
+                    rows="10"><?php echo htmlentities(preg_replace("/(\r\n|\n|\r)/", "\n", $edit_data['body']), ENT_HTML5 | ENT_QUOTES, "UTF-8") ?></textarea>
             </p>
             <p>
                 パスワード：<br>

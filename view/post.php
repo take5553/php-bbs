@@ -47,15 +47,7 @@ $post_data = $action->GetDBPostData();
     <!-- 記事入力エリア終了 -->
 
     <!-- エラーメッセージ表示エリア -->
-    <?php if (isset($saveResult) && $saveResult == false) :?>
-    <div class="errormsg">
-        <p>記事投稿に失敗しました。</p>
-    </div>
-    <?php elseif (isset($updateResult) && $updateResult == false) :?>
-    <div class="errormsg">
-        <p>記事編集に失敗しました。</p>
-    </div>
-    <?php elseif (isset($errmsg)) :?>
+    <?php if (isset($errmsg)) :?>
     <div class="errormsg">
         <p><?php echo htmlentities($errmsg, ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>
         </p>
@@ -76,7 +68,7 @@ $post_data = $action->GetDBPostData();
                 </p>
             </div>
             <div class="post_body">
-                <p><?php echo htmlentities($post['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>
+                <p><?php echo nl2br(htmlentities($post['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8")); ?>
                 </p>
             </div>
             <div class="posted_at">

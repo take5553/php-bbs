@@ -59,7 +59,7 @@ class GetFormActionTest extends TestCase
             $this->assertEquals($data['name'], $actual_fetch['name']);
             $this->assertEquals($data['email'], $actual_fetch['email']);
             $this->assertEquals($data['body'], $actual_fetch['body']);
-            $this->assertEquals($data['password'], $actual_fetch['password']);
+            $this->assertTrue(password_verify($data['password'], $actual_fetch['password']));
         }
         
         // 6. 後片付け
@@ -121,11 +121,12 @@ class GetFormActionTest extends TestCase
         $action = new GetFormAction();
 
         // 2. SQL文で直接記事を登録
+        $hashed_password = password_hash($data['password'], PASSWORD_DEFAULT);
         $smt = self::$pdo->prepare('insert into posts (name,email,body,password,posted_at,updated_at) values(:name,:email,:body,:password,now(),now())');
         $smt->bindParam(':name', $data['name'], PDO::PARAM_STR);
         $smt->bindParam(':email', $data['email'], PDO::PARAM_STR);
         $smt->bindParam(':body', $data['body'], PDO::PARAM_STR);
-        $smt->bindParam(':password', $data['password'], PDO::PARAM_STR);
+        $smt->bindParam(':password', $hashed_password, PDO::PARAM_STR);
         $smt->execute();
 
         // 3. GetDBPostDataで記事データ取得
@@ -136,7 +137,7 @@ class GetFormActionTest extends TestCase
         $this->assertEquals($data['name'], $testPost['name']);
         $this->assertEquals($data['email'], $testPost['email']);
         $this->assertEquals($data['body'], $testPost['body']);
-        $this->assertEquals($data['password'], $testPost['password']);
+        $this->assertTrue(password_verify($data['password'], $testPost['password']));
 
         // 5. 後片付け
         $sql = "delete from posts where name = '$data[name]'";

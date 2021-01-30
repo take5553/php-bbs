@@ -15,17 +15,17 @@
             <p>
                 名前：<br>
                 <input type="text" name="name" id="name"
-                    value="<?php echo $edit_data['name'] ?>">
+                    value="<?php echo htmlentities($edit_data['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
             </p>
             <p>
                 メールアドレス：<br>
                 <input type="email" name="email" id="email"
-                    value="<?php echo $edit_data['email'] ?>">
+                    value="<?php echo htmlentities($edit_data['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
             </p>
             <p>
                 本文：<br>
                 <textarea name="body" id="body" cols="30"
-                    rows="10"><?php echo $edit_data['body'] ?></textarea>
+                    rows="10"><?php echo htmlentities($edit_data['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?></textarea>
             </p>
             <p>
                 パスワード：<br>
@@ -33,7 +33,7 @@
             </p>
             <p>
                 <input type="hidden" name="id"
-                    value="<?php echo $edit_data['id'] ?>">
+                    value="<?php echo htmlentities($edit_data['id'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
                 <button name="eventId" value="update">更新</button><br><br>
                 <button name="eventId" value="delete">削除</button>
             </p>

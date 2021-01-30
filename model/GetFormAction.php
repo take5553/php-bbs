@@ -23,8 +23,8 @@ class GetFormAction
         }
 
         // パスワードのハッシュ化
-        $escapedData['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        if ($escapedData['password'] === false) {
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        if ($data['password'] === false) {
             return false;
         }
 
@@ -141,14 +141,9 @@ class GetFormAction
             return false;
         }
 
-        // 投稿データのエスケープ
-        foreach ($data as $key => $value) {
-            $escapedData[$key] = htmlentities($value, ENT_HTML5 | ENT_QUOTES, "UTF-8");
-        }
-
         // パスワードを確認
         $old_data = $this->GetDBOnePostData((int)$data['id']);
-        if (! password_verify($escapedData['password'], $old_data['password'])) {
+        if (! password_verify($data['password'], $old_data['password'])) {
             return false;
         }
 

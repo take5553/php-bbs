@@ -57,22 +57,22 @@ $post_data = $action->GetDBPostData();
             <?php foreach ($post_data as $post) :?>
             <div class="name">
                 <p>名前：<a
-                        href="mailto:<?php echo $post['email']; ?>"><?php echo $post['name']; ?></a>
+                        href="mailto:<?php echo htmlentities($post['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>"><?php echo htmlentities($post['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?></a>
                     <a
-                        href="edit/<?php echo $post['id'] ?>">編集・削除</a>
+                        href="edit/<?php echo htmlentities($post['id'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">編集・削除</a>
                 </p>
             </div>
             <div class="post_body">
-                <p><?php echo $post['body']; ?>
+                <p><?php echo htmlentities($post['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>
                 </p>
             </div>
             <div class="posted_at">
-                <p>投稿日時：<?php echo $post['posted_at']; ?>
+                <p>投稿日時：<?php echo htmlentities($post['posted_at'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>
                 </p>
             </div>
             <?php if ($post['posted_at'] != $post['updated_at']) : ?>
             <p>
-                更新日時：<?php echo $post['updated_at']; ?>
+                更新日時：<?php echo htmlentities($post['updated_at'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>
             </p>
             <?php endif;?>
             <?php endforeach; ?>

@@ -27,3 +27,26 @@ function GetParam()
 
     return $ret;
 }
+
+/**
+ * https://www.softel.co.jp/blogs/tech/archives/58
+ * ↑ここからコピー
+ *
+ * @param array $a
+ * @param integer $c
+ * @return int
+ */
+function array_depth($a, $c = 0)
+{
+    if (is_array($a) && count($a)) {
+        ++$c;
+        $_c = array($c);
+        foreach ($a as $v) {
+            if (is_array($v) && count($v)) {
+                $_c[] = array_depth($v, $c);
+            }
+        }
+        return max($_c);
+    }
+    return $c;
+}

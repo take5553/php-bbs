@@ -49,13 +49,7 @@ class GetFormAction
         $stm->execute();
         $results = $stm->fetchAll(PDO::FETCH_ASSOC);
 
-        $posts = new Posts();
-
-        foreach ($results as $result) {
-            $posts->Add(new Post($result));
-        }
-
-        return $posts;
+        return new Posts($results);
     }
 
     public function GetDBOnePostData(int $postId)

@@ -1,5 +1,5 @@
 <?php
-$post_data = $action->GetDBPostData();
+$posts = $action->GetDBPostData();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -16,20 +16,20 @@ $post_data = $action->GetDBPostData();
         <form action="./index.php" method="post" id="post_form">
             <p>
                 名前：<br>
-                <input type="text" name="name" id="name" value="<?php if ($repost_flag) {
-    echo h($filtered_post_data['name']);
+                <input type="text" name="name" id="name" value="<?php if ($repostFlag) {
+    echo h($postDataFromUser['name']);
 }?>">
             </p>
             <p>
                 メールアドレス：<br>
-                <input type="email" name="email" id="email" value="<?php if ($repost_flag) {
-    echo h($filtered_post_data['email']);
+                <input type="email" name="email" id="email" value="<?php if ($repostFlag) {
+    echo h($postDataFromUser['email']);
 }?>">
             </p>
             <p>
                 本文：<br>
-                <textarea name="body" id="body" cols="30" rows="10"><?php if ($repost_flag) {
-    echo h($filtered_post_data['body']);
+                <textarea name="body" id="body" cols="30" rows="10"><?php if ($repostFlag) {
+    echo h($postDataFromUser['body']);
 }?></textarea>
             </p>
             <p>
@@ -57,12 +57,12 @@ $post_data = $action->GetDBPostData();
 
     <!-- 記事表示エリア -->
     <div class="posts">
-        <?php if (!empty($post_data)) : ?>
+        <?php if (!empty($posts)) : ?>
         <div class="post">
-            <?php foreach ($post_data as $post) :?>
+            <?php foreach ($posts as $post) :?>
             <div class="name">
                 <p>名前：<a
-                        href="mailto:<?php echo h($post['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>"><?php echo htmlentities($post['name']); ?></a>
+                        href="mailto:<?php echo h($post['email']); ?>"><?php echo h($post['name']); ?></a>
                     <a
                         href="edit/<?php echo h($post['id']) ?>">編集・削除</a>
                 </p>

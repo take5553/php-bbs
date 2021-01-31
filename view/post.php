@@ -57,27 +57,27 @@ $posts = $action->GetDBPostData();
 
     <!-- 記事表示エリア -->
     <div class="posts">
-        <?php if (!empty($posts)) : ?>
+        <?php if ($posts->HavePosts()) : ?>
         <div class="post">
             <?php foreach ($posts as $post) :?>
             <div class="name">
                 <p>名前：<a
-                        href="mailto:<?php echo h($post['email']); ?>"><?php echo h($post['name']); ?></a>
+                        href="mailto:<?php echo $post->TheEmail(); ?>"><?php echo $post->TheName(); ?></a>
                     <a
-                        href="edit/<?php echo h($post['id']) ?>">編集・削除</a>
+                        href="edit/<?php echo $post->TheId(); ?>">編集・削除</a>
                 </p>
             </div>
             <div class="post_body">
-                <p><?php echo nl2br(h($post['body'])); ?>
+                <p><?php echo nl2br($post->TheBody()); ?>
                 </p>
             </div>
             <div class="posted_at">
-                <p>投稿日時：<?php echo h($post['posted_at']); ?>
+                <p>投稿日時：<?php echo $post->ThePostedDate(); ?>
                 </p>
             </div>
-            <?php if ($post['posted_at'] != $post['updated_at']) : ?>
+            <?php if ($post->IsUpdated()) : ?>
             <p>
-                更新日時：<?php echo h($post['updated_at']); ?>
+                更新日時：<?php echo $post->TheUpdatedDate(); ?>
             </p>
             <?php endif;?>
             <?php endforeach; ?>

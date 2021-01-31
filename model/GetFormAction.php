@@ -1,5 +1,7 @@
 <?php
 require_once('Validator.php');
+require_once('Post.php');
+require_once('Posts.php');
 class GetFormAction
 {
     private $pdo;
@@ -45,9 +47,15 @@ class GetFormAction
     {
         $stm = $this->pdo->prepare('select * from posts where deleted_at is null order by posted_at DESC');
         $stm->execute();
-        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stm->fetchAll(PDO::FETCH_ASSOC);
 
-        return $result;
+        $posts = new Posts();
+
+        foreach ($results as $result) {
+            $posts->Add(new Post($result));
+        }
+
+        return $posts;
     }
 
     public function GetDBOnePostData(int $postId)

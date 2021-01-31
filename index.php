@@ -50,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eventId'])) {
     }
 }
 
+// TODO: postsクラスを作った後に処理を見直し（変数代入とView呼び出しを分ける）
+// TODO: 失敗した時例外を投げるようにしてtry-catchで失敗処理をする
 switch ($eventId) {
     case 'save':
         $saveResult = $action->SaveDBPostData($postDataFromUser);

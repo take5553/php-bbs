@@ -21,7 +21,7 @@ $postDataFromUser['body'] = (string)filter_input(INPUT_POST, 'body');
 $postDataFromUser['password'] = (string)filter_input(INPUT_POST, 'password');
 
 $token = (string)filter_input(INPUT_POST, 'token');
-$params = $action->GetParam();
+$params = GetParam();
 
 // イベントIDを取得
 // CSRF対策としてpost.phpおよびedit.phpに埋め込んだトークンが一致しなければアクションは起こさない

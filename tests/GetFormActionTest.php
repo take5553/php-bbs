@@ -5,6 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 require('config/properties_for_test.php');
 require('model/GetFormAction.php');
+require_once('lib/func.php');
 
 class GetFormActionTest extends TestCase
 {
@@ -161,16 +162,13 @@ class GetFormActionTest extends TestCase
      */
     public function testGetParam($data, $expected)
     {
-        // 1. GetFormActionインスタンスを生成
-        $action = new GetFormAction();
-
-        // 2. リクエストURIセット
+        // 1. リクエストURIセット
         $_SERVER['REQUEST_URI'] = $data['uri'];
 
-        // 3. GetParamでパラメーター取得
-        $actual_result = $action->GetParam();
+        // 2. GetParamでパラメーター取得
+        $actual_result = GetParam();
 
-        // 4. 評価
+        // 3. 評価
         $this->assertEquals($expected['mode'], $actual_result['mode']);
         $this->assertEquals($expected['id'], $actual_result['id']);
     }

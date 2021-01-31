@@ -4,6 +4,7 @@ session_start();
 
 require_once('./config/properties.php');
 require_once('./model/GetFormAction.php');
+require_once('./lib/func.php');
 
 // クリッキングジャック対策
 header('X-Frame-Options: DENY');

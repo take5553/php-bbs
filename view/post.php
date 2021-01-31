@@ -17,19 +17,19 @@ $post_data = $action->GetDBPostData();
             <p>
                 名前：<br>
                 <input type="text" name="name" id="name" value="<?php if ($repost_flag) {
-    echo htmlentities($filtered_post_data['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8");
+    echo h($filtered_post_data['name']);
 }?>">
             </p>
             <p>
                 メールアドレス：<br>
                 <input type="email" name="email" id="email" value="<?php if ($repost_flag) {
-    echo htmlentities($filtered_post_data['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8");
+    echo h($filtered_post_data['email']);
 }?>">
             </p>
             <p>
                 本文：<br>
                 <textarea name="body" id="body" cols="30" rows="10"><?php if ($repost_flag) {
-    echo htmlentities($filtered_post_data['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8");
+    echo h($filtered_post_data['body']);
 }?></textarea>
             </p>
             <p>
@@ -39,7 +39,7 @@ $post_data = $action->GetDBPostData();
             <p>
                 <input type="hidden" name="eventId" value="save">
                 <input type="hidden" name="token"
-                    value="<?php echo htmlentities(password_hash(session_id(), PASSWORD_DEFAULT), ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
+                    value="<?php echo h(password_hash(session_id(), PASSWORD_DEFAULT)) ?>">
                 <input type="submit" value="送信">
             </p>
         </form>
@@ -49,7 +49,7 @@ $post_data = $action->GetDBPostData();
     <!-- エラーメッセージ表示エリア -->
     <?php if (isset($errmsg)) :?>
     <div class="errormsg">
-        <p><?php echo htmlentities($errmsg, ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>
+        <p><?php echo h($errmsg) ?>
         </p>
     </div>
     <?php endif; ?>
@@ -62,22 +62,22 @@ $post_data = $action->GetDBPostData();
             <?php foreach ($post_data as $post) :?>
             <div class="name">
                 <p>名前：<a
-                        href="mailto:<?php echo htmlentities($post['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>"><?php echo htmlentities($post['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?></a>
+                        href="mailto:<?php echo h($post['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>"><?php echo htmlentities($post['name']); ?></a>
                     <a
-                        href="edit/<?php echo htmlentities($post['id'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">編集・削除</a>
+                        href="edit/<?php echo h($post['id']) ?>">編集・削除</a>
                 </p>
             </div>
             <div class="post_body">
-                <p><?php echo nl2br(htmlentities($post['body'], ENT_HTML5 | ENT_QUOTES, "UTF-8")); ?>
+                <p><?php echo nl2br(h($post['body'])); ?>
                 </p>
             </div>
             <div class="posted_at">
-                <p>投稿日時：<?php echo htmlentities($post['posted_at'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>
+                <p>投稿日時：<?php echo h($post['posted_at']); ?>
                 </p>
             </div>
             <?php if ($post['posted_at'] != $post['updated_at']) : ?>
             <p>
-                更新日時：<?php echo htmlentities($post['updated_at'], ENT_HTML5 | ENT_QUOTES, "UTF-8"); ?>
+                更新日時：<?php echo h($post['updated_at']); ?>
             </p>
             <?php endif;?>
             <?php endforeach; ?>

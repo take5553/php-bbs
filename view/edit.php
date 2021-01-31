@@ -12,7 +12,7 @@
     <!-- エラーメッセージ表示エリア -->
     <?php if (isset($errmsg)) :?>
     <div class="errormsg">
-        <p><?php echo htmlentities($errmsg, ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>
+        <p><?php echo h($errmsg) ?>
         </p>
     </div>
     <?php endif; ?>
@@ -23,17 +23,17 @@
             <p>
                 名前：<br>
                 <input type="text" name="name" id="name"
-                    value="<?php echo htmlentities($edit_data['name'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
+                    value="<?php echo h($edit_data['name']) ?>">
             </p>
             <p>
                 メールアドレス：<br>
                 <input type="email" name="email" id="email"
-                    value="<?php echo htmlentities($edit_data['email'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
+                    value="<?php echo h($edit_data['email']) ?>">
             </p>
             <p>
                 本文：<br>
                 <textarea name="body" id="body" cols="30"
-                    rows="10"><?php echo htmlentities(preg_replace("/(\r\n|\n|\r)/", "\n", $edit_data['body']), ENT_HTML5 | ENT_QUOTES, "UTF-8") ?></textarea>
+                    rows="10"><?php echo h(preg_replace("/(\r\n|\n|\r)/", "\n", $edit_data['body'])) ?></textarea>
             </p>
             <p>
                 パスワード：<br>
@@ -41,9 +41,9 @@
             </p>
             <p>
                 <input type="hidden" name="id"
-                    value="<?php echo htmlentities($edit_data['id'], ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
+                    value="<?php echo h($edit_data['id']) ?>">
                 <input type="hidden" name="token"
-                    value="<?php echo htmlentities(password_hash(session_id(), PASSWORD_DEFAULT), ENT_HTML5 | ENT_QUOTES, "UTF-8") ?>">
+                    value="<?php echo h(password_hash(session_id(), PASSWORD_DEFAULT)) ?>">
                 <button name="eventId" value="update">更新</button><br><br>
                 <button name="eventId" value="delete">削除</button>
             </p>

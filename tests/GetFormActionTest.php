@@ -132,13 +132,15 @@ class GetFormActionTest extends TestCase
 
         // 3. GetDBPostDataで記事データ取得
         $actual_result = $action->GetDBPostData();
-        $testPost = $actual_result[0];
+        foreach ($actual_result as $testPost) {
+            break;
+        }
         
         // 4. それぞれ確認
-        $this->assertEquals($data['name'], $testPost['name']);
-        $this->assertEquals($data['email'], $testPost['email']);
-        $this->assertEquals($data['body'], $testPost['body']);
-        $this->assertTrue(password_verify($data['password'], $testPost['password']));
+        $this->assertEquals(h($data['name']), $testPost->TheName());
+        $this->assertEquals(h($data['email']), $testPost->TheEmail());
+        $this->assertEquals(h($data['body']), $testPost->TheBody());
+        //$this->assertTrue(password_verify($data['password'], $testPost['password']));
 
         // 5. 後片付け
         $sql = "delete from posts where name = '$data[name]'";
@@ -349,7 +351,7 @@ class GetFormActionTest extends TestCase
         $actual_results = $action->GetDBPostData();
         $postDatafound = false;
         foreach ($actual_results as $actual_result) {
-            if ($actual_result['id'] == $originalPostData['id']) {
+            if ($actual_result->TheId() == h($originalPostData['id'])) {
                 $postDatafound = true;
             }
         }

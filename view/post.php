@@ -68,7 +68,7 @@ $posts = $action->GetDBPostData();
                 </p>
             </div>
             <div class="post_body">
-                <p><?php echo nl2br($post->TheBody()); ?>
+                <p><?php echo nl2br(h($post->TheBody())); ?>
                 </p>
             </div>
             <div class="posted_at">

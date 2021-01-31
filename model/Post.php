@@ -39,7 +39,7 @@ class Post
 
     public function TheBody()
     {
-        return h($this->body);
+        return $this->body;
     }
 
     public function ThePostedDate()
@@ -55,5 +55,16 @@ class Post
     public function IsUpdated()
     {
         return $this->posted_at === $this->updated_at;
+    }
+
+    /**
+     * パスワードを確認する
+     *
+     * @param string $inputPassword
+     * @return bool
+     */
+    public function password_verify($inputPassword)
+    {
+        return password_verify($inputPassword, $this->password);
     }
 }

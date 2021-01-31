@@ -59,7 +59,7 @@ class GetFormAction
         $stm->execute();
         $result = $stm->fetch(PDO::FETCH_ASSOC);
     
-        return $result;
+        return is_array($result) ? new Post($result) : false;
     }
 
     public function UpdateDBPostData(array $postData)
@@ -71,7 +71,7 @@ class GetFormAction
 
         // パスワードを確認
         $old_data = $this->GetDBOnePostData((int)$postData['id']);
-        if (! password_verify($postData['password'], $old_data['password'])) {
+        if (! $old_data->password_verify($postData['password'])) {
             return false;
         }
 
@@ -98,7 +98,7 @@ class GetFormAction
         if ($old_data === false) {
             return false;
         }
-        if (! password_verify($postData['password'], $old_data['password'])) {
+        if (! $old_data->password_verify($postData['password'])) {
             return false;
         }
 

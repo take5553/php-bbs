@@ -78,13 +78,10 @@ switch ($eventId) {
         switch ($params['mode']) {
             case 'edit':
                 $edit_data = $action->GetDBOnePostData($params['id']);
-                if (is_array($edit_data)) {
-                    // $edit_dataが配列かどうか確認してからセッション切れ救済の処理をしているのは、
+                if (is_object($edit_data)) {
+                    // $edit_dataがインスタンスかどうか確認してからセッション切れ救済の処理をしているのは、
                     // 渡された記事IDが、未削除の記事を指定していないか確認したいから。
                     if ($reupdateFlag) {
-                        $edit_data['name'] = $_SESSION['name'];
-                        $edit_data['email'] = $_SESSION['email'];
-                        $edit_data['body'] = $_SESSION['body'];
                         $errmsg = $_SESSION['errmsg'];
                     }
                     require('./view/edit.php');

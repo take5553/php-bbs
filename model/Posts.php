@@ -1,5 +1,5 @@
 <?php
-require_once('../lib/func.php');
+require_once('lib/func.php');
 
 class Posts implements IteratorAggregate
 {

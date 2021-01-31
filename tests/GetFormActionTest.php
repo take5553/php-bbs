@@ -140,7 +140,7 @@ class GetFormActionTest extends TestCase
         $this->assertEquals(h($data['name']), $testPost->TheName());
         $this->assertEquals(h($data['email']), $testPost->TheEmail());
         $this->assertEquals(h($data['body']), $testPost->TheBody());
-        //$this->assertTrue(password_verify($data['password'], $testPost['password']));
+        $this->assertTrue($testPost->password_verify($data['password']));
 
         // 5. 後片付け
         $sql = "delete from posts where name = '$data[name]'";
@@ -248,10 +248,10 @@ class GetFormActionTest extends TestCase
         $actual_result = $action->GetDBOnePostData($actual_fetch['id']);
 
         // 6. SQL文で取得したデータと比較
-        $this->assertEquals($actual_fetch['name'], $actual_result['name']);
-        $this->assertEquals($actual_fetch['email'], $actual_result['email']);
-        $this->assertEquals($actual_fetch['body'], $actual_result['body']);
-        $this->assertEquals($actual_fetch['password'], $actual_result['password']);
+        $this->assertEquals(h($actual_fetch['name']), $actual_result->TheName());
+        $this->assertEquals(h($actual_fetch['email']), $actual_result->TheEmail());
+        $this->assertEquals($actual_fetch['body'], $actual_result->TheBody());
+        $this->assertTrue($actual_result->password_verify($data['password']));
 
         // 7. testUpdateDBPostDataへ引き継ぎ
         $actual_fetch['password'] = $data['password'];

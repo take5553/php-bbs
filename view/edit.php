@@ -23,17 +23,17 @@
             <p>
                 名前：<br>
                 <input type="text" name="name" id="name"
-                    value="<?php echo h($edit_data['name']) ?>">
+                    value="<?php echo $reupdateFlag ? h($_SESSION['name']) : $edit_data->TheName() ;?>">
             </p>
             <p>
                 メールアドレス：<br>
                 <input type="email" name="email" id="email"
-                    value="<?php echo h($edit_data['email']) ?>">
+                    value="<?php echo $reupdateFlag ? h($_SESSION['email']) : $edit_data->TheEmail() ?>">
             </p>
             <p>
                 本文：<br>
                 <textarea name="body" id="body" cols="30"
-                    rows="10"><?php echo h(preg_replace("/(\r\n|\n|\r)/", "\n", $edit_data['body'])) ?></textarea>
+                    rows="10"><?php echo h(preg_replace("/(\r\n|\n|\r)/", "\n", $reupdateFlag ? $_SESSION['body'] : $edit_data->TheBody())) ?></textarea>
             </p>
             <p>
                 パスワード：<br>
@@ -41,7 +41,7 @@
             </p>
             <p>
                 <input type="hidden" name="id"
-                    value="<?php echo h($edit_data['id']) ?>">
+                    value="<?php echo h($edit_data->TheId()) ?>">
                 <input type="hidden" name="token"
                     value="<?php echo h(password_hash(session_id(), PASSWORD_DEFAULT)) ?>">
                 <button name="eventId" value="update">更新</button><br><br>

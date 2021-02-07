@@ -8,7 +8,16 @@
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 9000
+            "port": 9000,
+        },
+        {
+            "name": "Listen for XDebug from Remote",
+            "type": "php",
+            "request": "launch",
+            "port": 9000,
+            "pathMappings": {
+                "/home/takeshi/www/html/php-bbs": "${workspaceRoot}"
+            }
         },
         {
             "name": "Launch currently open script",

@@ -54,7 +54,7 @@ class Post
 
     public function IsUpdated()
     {
-        return $this->posted_at === $this->updated_at;
+        return $this->posted_at !== $this->updated_at;
     }
 
     /**

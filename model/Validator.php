@@ -16,9 +16,9 @@ class Validator
         }
 
         // emailのチェック
-        if ($data['email'] === '' or ((mb_strlen($data['email']) > 256))) {
-            return true;
-        }
+        // if ($data['email'] === '' or ((mb_strlen($data['email']) > 256))) {
+        //     return true;
+        // }
 
         // bodyのチェック
         if ($data['body'] === '' or (mb_strlen($data['body']) > 5000)) {

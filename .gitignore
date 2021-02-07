@@ -5,3 +5,4 @@ config/properties_for_test.php
 check_server_parameter.php
 check_button.php
 experiment.php
+.vscode

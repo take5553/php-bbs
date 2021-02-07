@@ -61,8 +61,12 @@ $posts = $action->GetDBPostData();
         <div class="post">
             <?php foreach ($posts as $post) :?>
             <div class="name">
-                <p>名前：<a
-                        href="mailto:<?php echo $post->TheEmail(); ?>"><?php echo $post->TheName(); ?></a>
+                <p>名前：
+                    <?php if ($post->TheEmail() !== "") : ?>
+                    <a
+                        href="mailto:<?php echo $post->TheEmail(); ?>">
+                        <?php endif; ?>
+                        <?php echo $post->TheName(); ?></a>
                     <a
                         href="edit/<?php echo $post->TheId(); ?>">編集・削除</a>
                 </p>

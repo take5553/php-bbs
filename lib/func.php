@@ -12,7 +12,7 @@ function GetParam()
         'id' => ''
     );
     $params = explode('/', $_SERVER['REQUEST_URI'], 5);
-    if ($params[1] != 'bbs' || $params[1] !='php-bbs') {
+    if ($params[1] != 'bbs' && $params[1] !='php-bbs') {
         return $ret;
     }
     if ($params[2] != 'edit') {

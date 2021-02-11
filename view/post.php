@@ -42,8 +42,7 @@ $posts = $action->GetDBPostData();
                 </p>
                 <p>
                     <input type="hidden" name="eventId" value="save">
-                    <input type="hidden" name="token"
-                        value="<?php echo h(password_hash(session_id(), PASSWORD_DEFAULT)) ?>">
+                    <input type="hidden" name="token" value="<?php echo h(password_hash(session_id(), PASSWORD_DEFAULT)) ?>">
                     <input type="submit" value="送信">
                 </p>
             </form>
@@ -53,66 +52,68 @@ $posts = $action->GetDBPostData();
         <!-- エラーメッセージ表示エリア -->
         <?php if (isset($errmsg)) :?>
         <div class="errormsg">
-            <p><?php echo h($errmsg) ?>
-            </p>
+            <p><?php echo h($errmsg) ?></p>
         </div>
         <?php endif; ?>
         <!-- エラーメッセージ終了 -->
 
         <!-- 記事表示エリア -->
-
-        <?php if ($posts->HavePosts()) : ?>
-
-        <?php foreach ($posts as $post) :?>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-
-                <p>名前：
-                    <?php if ($post->TheEmail() !== "") : ?>
-                    <a
-                        href="mailto:<?php echo $post->TheEmail(); ?>">
-                        <?php endif; ?>
-                        <?php echo $post->TheName(); ?></a>
-                    <a
-                        href="edit/<?php echo $post->TheId(); ?>">編集・削除</a>
-                </p>
-
-            </div>
-            <div class="panel-body">
-
-                <p><?php echo nl2br(h($post->TheBody())); ?>
-                </p>
-
-            </div>
-            <div class="panel-footer">
-                <div class="posted_at">
-                    <p>投稿日時：<?php echo $post->ThePostedDate(); ?>
-                    </p>
+        <div class="posts">
+            <?php if ($posts->HavePosts()) : ?>
+            <div class="post">
+                <?php foreach ($posts as $post) :?>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="name">
+                            <div class="row justify-content-between mb-0">
+                                <div class="col">
+                                    名前：
+                                <?php if ($post->TheEmail() !== "") : ?>
+                                    <a href="mailto:<?php echo $post->TheEmail(); ?>">
+                                <?php endif; ?>
+                                    <?php echo $post->TheName(); ?></a>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="edit/<?php echo $post->TheId(); ?>">編集・削除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="post_body">
+                            <p class="mb-0">
+                                <?php echo nl2br(h($post->TheBody())); ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="posted_at">
+                                    <p class="mb-0">
+                                        投稿日時：<?php echo $post->ThePostedDate(); ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <?php if ($post->IsUpdated()) : ?>
+                                <div class="col-sm">
+                                    <p class="mb-0">
+                                        更新日時：<?php echo $post->TheUpdatedDate(); ?>
+                                    </p>
+                                </div>
+                            <?php endif;?>
+                        </div>
+                    </div>
                 </div>
-                <?php if ($post->IsUpdated()) : ?>
-                <p>
-                    更新日時：<?php echo $post->TheUpdatedDate(); ?>
-                </p>
-                <?php endif;?>
+                <?php endforeach; ?>
             </div>
+            <?php endif; ?>
         </div>
-        <?php endforeach; ?>
-
-        <?php endif; ?>
-
         <!-- 記事表示エリア終了 -->
-        <div class="panel panel-default">
-            <div class="panel-body">
-                Basic panel example
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
-        </script>
-
     </div>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

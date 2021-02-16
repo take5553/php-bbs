@@ -13,8 +13,13 @@ $posts = $action->GetDBPostData();
 </head>
 
 <body>
-    <div class="container">
-        <div class="row mb-4">
+    <style>
+    .maxWidth{
+        max-width: 960px;
+    }
+    </style>
+    <div class="container maxWidth">
+        <div class="row my-5">
             <h1>たけしのページの掲示板</h1>
         </div>
         <!-- 記事入力エリア -->
@@ -51,8 +56,8 @@ $posts = $action->GetDBPostData();
 
         <!-- エラーメッセージ表示エリア -->
         <?php if (isset($errmsg)) :?>
-        <div class="errormsg">
-            <p><?php echo h($errmsg) ?></p>
+        <div class="errormsg alert alert-danger mb-5" role="alert">
+            <?php echo h($errmsg) ?>
         </div>
         <?php endif; ?>
         <!-- エラーメッセージ終了 -->

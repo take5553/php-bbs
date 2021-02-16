@@ -14,38 +14,38 @@ $posts = $action->GetDBPostData();
 
 <body>
     <div class="container">
-        <h1>たけしのページの掲示板</h1>
+        <div class="row mb-4">
+            <h1>たけしのページの掲示板</h1>
+        </div>
         <!-- 記事入力エリア -->
-        <div class="input_area">
-            <form action="./index.php" method="post" id="post_form">
-                <p>
-                    名前：<br>
-                    <input type="text" name="name" id="name" value="<?php if ($repostFlag) {
-    echo h($postDataFromUser['name']);
-}?>">
-                </p>
-                <p>
-                    メールアドレス：<br>
-                    <input type="email" name="email" id="email" value="<?php if ($repostFlag) {
-    echo h($postDataFromUser['email']);
-}?>">
-                </p>
-                <p>
-                    本文：<br>
-                    <textarea name="body" id="body" cols="30" rows="10"><?php if ($repostFlag) {
-    echo h($postDataFromUser['body']);
-}?></textarea>
-                </p>
-                <p>
-                    パスワード：<br>
-                    <input type="password" name="password" id="password">
-                </p>
-                <p>
-                    <input type="hidden" name="eventId" value="save">
-                    <input type="hidden" name="token" value="<?php echo h(password_hash(session_id(), PASSWORD_DEFAULT)) ?>">
-                    <input type="submit" value="送信">
-                </p>
-            </form>
+        <div class="row">
+            <div class="input_area">
+                <form action="./index.php" method="post" id="post_form" class="mb-5">
+                    <div class="row mb-2 mb-sm-4">
+                        <div class="col-sm-6 mb-2 mb-sm-0">
+                            <label for="name">名前：</label>
+                            <input type="text" class="form-control" name="name" id="name" value="<?php echo $repostFlag ? h($postDataFromUser['name']) : "";?>">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="email">メールアドレス：</label>
+                            <input type="email" class="form-control" name="email" id="email" value="<?php echo $repostFlag ? h($postDataFromUser['email']) : "";?>">
+                        </div>
+                    </div>
+                    <div class="row mb-2 mb-sm-4">
+                        <div class="col-12"><label for="body">本文：</label></div>
+                        <div class="col-12"><textarea name="body" class="form-control" rows=10 id="body"><?php echo $repostFlag ? h($postDataFromUser['body']) : "";?></textarea></div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-12"><label for="password">パスワード：</label></div>
+                        <div class="col-6"><input type="password" class="form-control" name="password" id="password"></div>
+                        <input type="hidden" name="eventId" value="save">
+                        <input type="hidden" name="token" value="<?php echo h(password_hash(session_id(), PASSWORD_DEFAULT)) ?>">
+                    </div>
+                    <div class="mb-4">
+                        <button class="btn btn-primary" type="submit">送信</button>
+                    </div>
+                </form>
+            </div>
         </div>
         <!-- 記事入力エリア終了 -->
 
